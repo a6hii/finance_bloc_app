@@ -26,3 +26,9 @@ App architecture:
 **App features:
 -Firebase email-password registration/login
 -User can save their day to day expenses and income.
+
+DemoVideo: https://drive.google.com/file/d/17qRgnq7AHcNhg0le3plJmBby_8Kx3a6t/view?usp=sharing
+
+![HomePage](https://drive.google.com/file/d/17sjQyL5FJcHST4kF9fGyQ3R-mpgRdfiA/view?usp=sharing)
+![AddTransactions](https://drive.google.com/file/d/17rx4_WV1daWWMboxKikUSEOhUJb7za0_/view?usp=sharing)
+![BottomSheet](https://drive.google.com/file/d/17rg4_AWaRhaYC4hzOXyPfv3c2qDTEhM_/view?usp=sharing)
