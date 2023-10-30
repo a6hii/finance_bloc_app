@@ -29,6 +29,6 @@ App architecture:
 
 DemoVideo: https://drive.google.com/file/d/17qRgnq7AHcNhg0le3plJmBby_8Kx3a6t/view?usp=sharing
 
-![HomePage](https://github.com/abhishek-trigsy/finance_bloc_app/blob/main/screenshots/addTransactions.png)
+![HomePage](../screenshots/home.png)
 ![AddTransactions](../master/myFolder/image.png)
 ![BottomSheet](../master/myFolder/image.png)
