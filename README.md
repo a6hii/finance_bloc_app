@@ -1,17 +1,28 @@
-# finance_management
 
-A new Flutter project.
 
-## Getting Started
+App architecture:
+    -> config Directory:
+        Theme and Color Config Files: Centralizing theme and color configurations here enables easy access and modification of the app's theme across multiple views. This helps maintain consistent branding and user interface design.
 
-This project is a starting point for a Flutter application.
+    -> constants Directory:
+        Ideal for storing app-level constant values, enums, or static data used throughout the application. This separation helps in centralizing and accessing these constants when needed.
 
-A few resources to get you started if this is your first Flutter project:
+    -> helpers Directory:
+        Often used for utility functions, conversions, or general helper methods that can be used across different sections of your app.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    services Directory:
+      function: 
+       blocs Subdirectory: Storing all BLoC-related files according to the type of service it provides is a great way to organize your business logic. It keeps BLoCs separate and easily accessible when needed. Separating this directory for BLoC implementation aligns well with the clean separation of concerns.
+        cloud_services Subdirectory: This might contain services for interacting with cloud-based services, APIs, or Firebase. This segregation helps in isolating cloud interaction logic from other components. It's with the blocFolder, making it easy to navigate while working on bloc.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# finance_bloc_app
+    utilities Directory:
+        Useful for general utility classes, extensions, or functionalities that don't belong to a specific section but can be utilized globally.
+
+    views Directory:
+        Subdirectories (e.g., auth, home, ): Grouping views based on their functionality or user interface segments is a good practice. Each subdirectory can contain related screens, widgets, services or UI components.
+
+
+
+**App features:
+-Firebase email-password registration/login
+-User can save their day to day expenses and income.
