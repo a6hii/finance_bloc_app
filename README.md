@@ -28,7 +28,3 @@ App architecture:
 -User can save their day to day expenses and income.
 
 DemoVideo: https://drive.google.com/file/d/17qRgnq7AHcNhg0le3plJmBby_8Kx3a6t/view?usp=sharing
-
-![HomePage](../screenshots/home.png)
-![AddTransactions](../master/myFolder/image.png)
-![BottomSheet](../master/myFolder/image.png)
