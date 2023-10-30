@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "211175709557",
+    "project_id": "finance-bloc-app",
+    "storage_bucket": "finance-bloc-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211175709557:android:6f6991ef915fa4b588113c",
+        "android_client_info": {
+          "package_name": "com.example.finance_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3xEkQtxvWtVTi-v7VMilSyQLuXXacNE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
