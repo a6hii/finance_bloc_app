@@ -47,8 +47,8 @@ class TransactionModel extends Equatable {
   }
 
   factory TransactionModel.fromSnapshot(
-      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final Map<String, dynamic> data = snapshot.data();
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final Map<String, dynamic> data = snapshot.data() ?? {};
 
     List<Expense>? expenses = (data['expenses'] as List<dynamic>?)
         ?.map((e) => Expense.fromJson(e))
@@ -83,6 +83,26 @@ class TransactionModel extends Equatable {
       'user_id': uid,
       'date': date,
     };
+  }
+
+  TransactionModel copyWith({
+    String? documentId,
+    List<Expense>? expenses,
+    List<Expense>? income,
+    double? currentBalance,
+    String? uid,
+    TransactionType? type,
+    Timestamp? date,
+  }) {
+    return TransactionModel(
+      documentId: documentId ?? this.documentId,
+      expenses: expenses ?? this.expenses,
+      income: income ?? this.income,
+      currentBalance: currentBalance ?? this.currentBalance,
+      uid: uid ?? this.uid,
+      type: type ?? this.type,
+      date: date ?? this.date,
+    );
   }
 
   @override

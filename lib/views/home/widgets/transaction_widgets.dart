@@ -1,4 +1,3 @@
-import 'package:finance_management/config/route_names.dart';
 import 'package:finance_management/views/home/widgets/dashboard_card.dart';
 import 'package:finance_management/views/home/widgets/recent_transactions_list.dart';
 import 'package:finance_management/services/transactions/cloud/models/transaction_model.dart';
@@ -9,11 +8,13 @@ class TransactionWidgets extends StatelessWidget {
   final int totalTransactions;
   final double totalExpenses;
   final double totalIncome;
+  final VoidCallback onTap;
   const TransactionWidgets({
     required this.transactions,
     required this.totalTransactions,
     required this.totalExpenses,
     required this.totalIncome,
+    required this.onTap,
     super.key,
   });
 
@@ -25,7 +26,15 @@ class TransactionWidgets extends StatelessWidget {
         children: [
           SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.sizeOf(context).height,
+              height: (transactions?.expenses?.isNotEmpty ??
+                          false ||
+                              (transactions?.income?.isNotEmpty ?? false)) &&
+                      (((transactions?.expenses?.length ?? 0) +
+                              (transactions?.income?.length ?? 0)) >
+                          7)
+                  ? 300.0 * (transactions?.expenses?.length ?? 0) +
+                      (transactions?.income?.length ?? 0)
+                  : MediaQuery.sizeOf(context).height,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,85 +112,6 @@ class TransactionWidgets extends StatelessWidget {
                                   ),
                         )
                       : RecentTransactionsList(transactions: transactions),
-                  //TODO: Add BudgetWidgets
-                  // Padding(
-                  //   padding:
-                  //       const EdgeInsets.only(top: 40, bottom: 26),
-                  //   child: Text(
-                  //     "Your budget",
-                  //     style:
-                  //         Theme.of(context).textTheme.displaySmall,
-                  //   ),
-                  // ),
-                  // transactions == null ||
-                  //         transactions.monthlyBudget == null
-                  //     ? Text(
-                  //         "No budget created.",
-                  //         style: Theme.of(context)
-                  //             .textTheme
-                  //             .bodySmall!
-                  //             .copyWith(
-                  //               color: Colors.white70,
-                  //             ),
-                  //       )
-                  //     : Container(
-                  //         height: 160,
-                  //         width: MediaQuery.sizeOf(context).width *
-                  //             0.68,
-                  //         decoration: BoxDecoration(
-                  //           color: const Color(0xFF222226),
-                  //           borderRadius: BorderRadius.circular(4),
-                  //         ),
-                  //         child: Column(
-                  //           crossAxisAlignment:
-                  //               CrossAxisAlignment.start,
-                  //           children: [
-                  //             Padding(
-                  //               padding: const EdgeInsets.only(
-                  //                   top: 16, left: 14),
-                  //               child: Text(
-                  //                 "Budget left",
-                  //                 style: Theme.of(context)
-                  //                     .textTheme
-                  //                     .displayMedium,
-                  //               ),
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.only(
-                  //                   top: 8, left: 14),
-                  //               child: Text(transactions
-                  //                       ?.monthlyBudget?.totalBudget
-                  //                       .toString() ??
-                  //                   '\$ 5555'),
-                  //             ),
-                  //             Builder(builder: (context) {
-                  //               final ValueNotifier<double>
-                  //                   progress =
-                  //                   ValueNotifier((transactions!
-                  //                           .monthlyBudget!
-                  //                           .totalBudget) /
-                  //                       (int.parse(totalExpenses)));
-                  //               return ValueListenableBuilder(
-                  //                   valueListenable: progress,
-                  //                   builder: (context, value, _) {
-                  //                     return LinearProgressIndicator(
-                  //                       value: value,
-                  //                       borderRadius:
-                  //                           BorderRadius.circular(
-                  //                               6.0),
-                  //                       backgroundColor:
-                  //                           const Color(0xFF363636),
-                  //                       valueColor:
-                  //                           const AlwaysStoppedAnimation<
-                  //                               Color>(
-                  //                         Colors.pink,
-                  //                       ),
-                  //                     );
-                  //                   });
-                  //             })
-                  //           ],
-                  //         ),
-                  //       ),
                 ],
               ),
             ),
@@ -191,10 +121,7 @@ class TransactionWidgets extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 44, right: 16),
               child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(addOrUpdateTransaction,
-                      arguments: transactions);
-                },
+                onTap: onTap,
                 child: const CircleAvatar(
                   backgroundColor: Colors.amberAccent,
                   child: Icon(Icons.add),

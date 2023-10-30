@@ -4,6 +4,7 @@ import 'package:finance_management/services/transactions/bloc/fetch_transactions
 import 'package:finance_management/services/transactions/cloud/models/transaction_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:finance_management/config/route_names.dart';
 import 'package:finance_management/services/auth/auth_service.dart';
 import 'package:finance_management/services/auth/bloc/auth_bloc.dart';
 import 'package:finance_management/services/auth/bloc/auth_event.dart';
@@ -124,6 +125,21 @@ class _HomeTransactionsViewState extends State<HomeTransactionsView> {
                           totalTransactions: totalTransactions,
                           totalExpenses: totalExpenses,
                           totalIncome: totalIncome,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(addOrUpdateTransaction,
+                                    arguments: transactions)
+                                .then((value) {
+                              if (value == true) {
+                                final endDate = DateTime.now();
+                                final startDate =
+                                    DateTime(endDate.year, endDate.month, 1);
+                                context.read<FetchTransactionsBloc>().add(
+                                    FetchTransactionEvent(
+                                        userId, startDate, endDate));
+                              }
+                            });
+                          },
                         );
                       } else {
                         return const Center(child: CircularProgressIndicator());

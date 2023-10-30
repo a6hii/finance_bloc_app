@@ -7,6 +7,7 @@ class Expense extends Equatable {
   final String category;
   final String paymentMode;
   final String? details;
+  final String? type;
 
   const Expense({
     required this.date,
@@ -14,6 +15,7 @@ class Expense extends Equatable {
     required this.category,
     required this.paymentMode,
     this.details,
+    this.type,
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) {

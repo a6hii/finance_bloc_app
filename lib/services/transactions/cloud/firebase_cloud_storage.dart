@@ -71,8 +71,10 @@ class FirebaseCloudStorage {
   }) async {
     try {
       if (docId.isNotNullOrEmpty) {
+        print("DocIdNotEmpty");
         final existingDoc = await transactionsCollection.doc(docId).get();
         if (existingDoc.exists) {
+          print("Existing");
           final currentBalance = existingDoc.get('current_balance') as double;
 
           // Update the balance by adding the amountToAdd

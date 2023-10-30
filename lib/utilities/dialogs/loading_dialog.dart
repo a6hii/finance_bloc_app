@@ -7,6 +7,7 @@ CloseDialog showLoadingDialog({
   required String text,
 }) {
   final dialog = AlertDialog(
+    backgroundColor: Colors.black,
     content: Column(
       mainAxisSize: MainAxisSize.min,
       children: [

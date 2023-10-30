@@ -11,6 +11,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
+TransactionModel updateExpense(
+    TransactionModel transaction, Expense newExpense) {
+  List<Expense> updatedExpenses =
+      List<Expense>.from(transaction.expenses ?? []);
+
+  int expenseIndex = updatedExpenses.indexWhere((expense) {
+    print("expense.date : ${expense.date} || ${newExpense.date}");
+    return expense.date == newExpense.date;
+  });
+
+  if (expenseIndex != -1) {
+    print("AdD");
+    updatedExpenses.add(newExpense);
+  } else {
+    print("Replace");
+    updatedExpenses[expenseIndex] = newExpense;
+  }
+
+  return TransactionModel(
+    documentId: transaction.documentId,
+    expenses: updatedExpenses,
+    income: transaction.income,
+    currentBalance: transaction.currentBalance,
+    uid: transaction.uid,
+    type: transaction.type,
+    date: transaction.date,
+  );
+}
+
 class TransactionTypeSelectionCubit extends Cubit<TransactionType> {
   TransactionTypeSelectionCubit() : super(TransactionType.expense);
 
@@ -51,7 +80,8 @@ class _CreateUpdateTransactionViewState
       BuildContext context) async {
     //Get transaction from arguments
     final widgetTransaction = context.getArgument<TransactionModel>();
-    final existingTransaction = context.getArgument<Map<bool, Expense>>();
+    final existingTransaction =
+        context.getArgument<Map<bool, Map<Expense, TransactionModel?>>>();
 
     if (widgetTransaction != null) {
       _transaction = widgetTransaction;
@@ -79,15 +109,28 @@ class _CreateUpdateTransactionViewState
             .read<TransactionTypeSelectionCubit>()
             .toggleTransactionType(TransactionType.income);
       }
-      _amountController.text =
-          existingTransaction.values.first.amount.toString();
-      _dateController.text = DateFormat('dd/MM/yyyy')
-          .format(existingTransaction.values.first.date.toDate());
-      _categoryController.text = existingTransaction.values.first.category;
+      // print("existingTransaction ${existingTransaction.values.first.amount}");
+      _amountController.text = existingTransaction.values.first.keys
+          .map((e) => e.amount)
+          .first
+          .toString();
+      _dateController.text = DateFormat('dd/MM/yyyy').format(existingTransaction
+          .values.first.keys
+          .map((e) => e.date)
+          .first
+          .toDate());
+      _categoryController.text =
+          existingTransaction.values.first.keys.map((e) => e.category).first;
       _paymentModeController.text =
-          existingTransaction.values.first.paymentMode;
+          existingTransaction.values.first.keys.map((e) => e.paymentMode).first;
       _detailsController.text =
-          existingTransaction.values.first.details ?? _detailsController.text;
+          existingTransaction.values.first.keys.map((e) => e.details).first ??
+              _detailsController.text;
+
+      final f = updateExpense(
+          existingTransaction.values.first.values.toList().map((e) => e).first!,
+          existingTransaction.values.first.keys.toList().first);
+      return f;
     }
 
     final currentUser = AuthService.firebase().currentUser!;
@@ -112,6 +155,7 @@ class _CreateUpdateTransactionViewState
 
   @override
   Widget build(BuildContext context) {
+    //TODO:
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -534,7 +578,7 @@ class _CreateUpdateTransactionViewState
                                     );
                                   }
                                   if (context.mounted) {
-                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop(true);
                                   }
                                 },
                                 child: Text(

@@ -64,8 +64,10 @@ class RecentTransactionsList extends StatelessWidget {
                       : const Icon(Icons.arrow_downward_rounded,
                           color: Colors.white),
                   onTap: () {
-                    Navigator.of(context).pushNamed(addOrUpdateTransaction,
-                        arguments: {isExpense: item});
+                    Navigator.of(context)
+                        .pushNamed(addOrUpdateTransaction, arguments: {
+                      isExpense: {item: transactions},
+                    });
                   },
                   title: Text(
                     '\u20B9 ${combinedList[index].amount.toString()}',
